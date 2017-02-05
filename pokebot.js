@@ -61,11 +61,10 @@ bot.dialog('/', (session) => {
     console.log(intent);
     console.log(entity); //console.log(res.get('pokemon'));
 
+    if (intent) {
 
-
-		if (intent) {
-
-  		INTENTS[intent.slug](entity)
+			INTENTS[intent.slug](entity)
+  		// INTENTS[intent.slug](entity)
   		.then(res => { res.forEach((message) => sendMessageByType[message.type](session, message)); })
   		.catch(err => { err.forEach((message) => sendMessageByType[message.type](session, message)); });
 		}
