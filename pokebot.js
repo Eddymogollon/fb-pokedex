@@ -1,5 +1,7 @@
-const getGreetings = require('./intents/greetings.js');
 const getInfoPokemon = require('./intents/infopokemon.js');
+const getGreetings = require('./intents/greetings.js');
+const getGoodbyes = require('./intents/goodbyes.js');
+const getFeelings = require('./intents/feelings.js');
 const config = require('./config.js');
 const restify = require('restify');
 const builder = require('botbuilder');
@@ -15,8 +17,11 @@ const connector = new builder.ChatConnector({
 
 const bot = new builder.UniversalBot(connector);
 const INTENTS = {
-  greetings: getGreetings,
   infopokemon: getInfoPokemon,
+  greetings: getGreetings,
+  goodbyes: getGoodbyes,
+  feelings: getFeelings,
+  // help: getHelp,
 };
 
 const sendMessageByType = {
@@ -40,9 +45,11 @@ bot.dialog('/', (session) => {
 		// }
 
 		if (intent) {
+
   		INTENTS[intent.slug](entity)
   		.then(res => { res.forEach((message) => sendMessageByType[message.type](session, message)); })
   		.catch(err => { err.forEach((message) => sendMessageByType[message.type](session, message)); });
+ 
 		}
 
   })

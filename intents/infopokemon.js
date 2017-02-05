@@ -8,9 +8,10 @@ const getInfoPokemon = (entity) => {
     request.get('https://pokeapi.co/api/v2/pokemon/' + entity.raw)
     .end((err, res) => {
       if (err) { 
-      	return reject('ERROR');
+      	return reject(err);
       }
       resolve(infoPokemonLayout(res.body));
+
       // console.log(res);
     });
   });
