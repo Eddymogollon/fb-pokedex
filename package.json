@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "botbuilder": "^3.6.0",
+    "fuzzy-matching": "^0.4.3",
     "recastai": "^2.3.0",
     "restify": "^4.3.0",
     "superagent": "^3.4.1"

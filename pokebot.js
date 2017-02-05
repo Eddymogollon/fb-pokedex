@@ -2,6 +2,11 @@ const getInfoPokemon = require('./intents/infopokemon.js');
 const getGreetings = require('./intents/greetings.js');
 const getGoodbyes = require('./intents/goodbyes.js');
 const getFeelings = require('./intents/feelings.js');
+
+const pokeData = require('./lib/poke-data.js');
+const Fuzzy = require('fuzzy-matching')
+const fmpokemons = new Fuzzy(pokeData.pokemons);
+
 const config = require('./config.js');
 const restify = require('restify');
 const builder = require('botbuilder');
@@ -32,24 +37,30 @@ const sendMessageByType = {
   text: (session, elem) => session.send(elem.content),
 };
 
+const checkEntity = (res) => {
+  const pokemon = res.get('pokemon');
+  if (pokemon) {
+    const match = fmpokemons.get(pokemon.raw);
+    if (match.distance < 0.7) {
+      pokemon.wrong = true;
+    } else { pokemon.raw = match.value; }
+    return pokemon;
+  }
+  return null;
+};
+
 bot.dialog('/', (session) => {
   recastClient.textRequest(session.message.text)
   .then(res => {
     const intent = res.intent();
-    const entity = res.get('pokemon');
-
-		// if (intent) {
-	 //  	INTENTS[intent.slug](entity)
-	 //  	.then(res => { res.forEach((message) => session.send(message)); }) // If intent is infopokemon & no error: ‘OK’
-	 //  	.catch(err => { err.forEach((message) => session.send(message)); }); // If intent is infopokemon & error: ‘ERROR’
-		// }
-
+    //const entity = res.get('pokemon');
+    const entity = checkEntity(res);
+    console.log(entity);
 		if (intent) {
 
   		INTENTS[intent.slug](entity)
   		.then(res => { res.forEach((message) => sendMessageByType[message.type](session, message)); })
   		.catch(err => { err.forEach((message) => sendMessageByType[message.type](session, message)); });
- 
 		}
 
   })

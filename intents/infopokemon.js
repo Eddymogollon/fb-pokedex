@@ -1,22 +1,24 @@
 const request = require('superagent');
+
 const getInfoPokemon = (entity) => {
-  if (!entity) { 
-  	return Promise.reject('You didn\'t give me any pokemons');
-	}
 
-  return new Promise((resolve, reject) => {
-    request.get('https://pokeapi.co/api/v2/pokemon/' + entity.raw)
-    .end((err, res) => {
-      if (err) { 
-      	return reject(err);
-      }
-      resolve(infoPokemonLayout(res.body));
+	  if (!entity) { return Promise.reject([toText('Which pokemon?')]); }
 
-      // console.log(res);
-    });
-  });
+	  if (entity.wrong) { return Promise.reject([toText(`The pokemon ${entity.raw} does not exist... You might have mispelled it.`)]); }
+
+	  return new Promise((resolve, reject) => {
+	    request.get('https://pokeapi.co/api/v2/pokemon/' + entity.raw)
+	    .end((err, res) => {
+	      if (err) { 
+	      	return reject(err);
+	      }
+
+	      resolve(infoPokemonLayout(res.body));
+	    });
+	  });
 
 };
+
 
 const infoPokemonLayout = (json) => {
   const answer = [toText(`:mag_right: ${json.name} infos`)];
@@ -37,30 +39,3 @@ const toImage = (image) => {
 };
 
 module.exports = getInfoPokemon;
-
-
-
-
-
-
-
-
-
-
-
-// const request = require('superagent');
-// const getInfoPokemon = (entity) => {
-//   if (!entity) { 
-//   	return Promise.reject('You didn\'t give me any pokemon');
-//   }
-//   return new Promise((resolve, reject)) => {
-//     request.get('https://pokeapi.co/api/v2/pokemon/' + entity.raw)
-//     .end((err, res) => {
-//       if (err) { return reject('ERROR'); }
-//       resolve('OK');
-//       console.log(res.body);
-//     });
-//   };
-// }
-
-// modules.exports = getInfoPokemon;
