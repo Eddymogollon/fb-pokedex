@@ -55,7 +55,14 @@ bot.dialog('/', (session) => {
     const intent = res.intent();
     //const entity = res.get('pokemon');
     const entity = checkEntity(res);
-    console.log(entity);
+
+    //Check words is not necessary
+
+    console.log(intent);
+    console.log(entity); //console.log(res.get('pokemon'));
+
+
+
 		if (intent) {
 
   		INTENTS[intent.slug](entity)
