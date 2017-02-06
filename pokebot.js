@@ -15,7 +15,7 @@ const restify = require('restify');
 const builder = require('botbuilder');
 const recast = require('recastai');
 const recastClient = new recast.Client(config.recast);
-const port = (process.env.PORT || 5678);
+const port = (process.env.PORT || 8080);
 
 // Connection to Microsoft Bot Framework
 const connector = new builder.ChatConnector({
@@ -65,9 +65,6 @@ bot.dialog('/', (session) => {
 
     console.log(intent);
     console.log(entity); //console.log(res.get('pokemon'));
-    if (!intent || !entity) {
-    	reject(session.send("Sorry, didn't get that. Ask for help if you're confused!"));
-    }
 
     if (intent) {
 
