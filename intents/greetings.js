@@ -9,7 +9,7 @@ const getGreetings = (entity) => {
     `Hey, nice to see you.`,
     `Hola!`,
     `Hi, how can I help you?`,
-    `Hey, what do you need?`,
+    `Hey!!`,
   ];
   
   let response = [toText(random(answers))];
@@ -26,6 +26,8 @@ const getGreetings = (entity) => {
 const toText = (message) => { 
 	return { type: 'text', content: message }; 
 };
+
+
 
 module.exports = getGreetings;
 

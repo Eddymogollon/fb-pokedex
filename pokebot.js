@@ -30,7 +30,7 @@ const INTENTS = {
   goodbyes: getGoodbyes,
   feelings: getFeelings,
   thanks: getThanks,
-  help: getHelp,
+  help: getHelp
 };
 
 const sendMessageByType = {
@@ -39,15 +39,22 @@ const sendMessageByType = {
     contentUrl: elem.content,
   })),
   text: (session, elem) => session.send(elem.content),
+  buttons: (session, elem) => {
+   const buttons = elem.content.map(button => {
+     return (new builder.CardAction().title(button.title).type('imBack').value(button.value));
+   });
+   const card = new builder.ThumbnailCard().buttons(buttons).subtitle(elem.title);
+   session.send(new builder.Message().addAttachment(card));
+  }
 };
 
 const checkEntity = (res) => {
   const pokemon = res.get('pokemon');
   if (pokemon) {
     const match = fmpokemons.get(pokemon.raw);
-    if (match.distance < 0.85 && math.distance > 0.80) {
+    if (match.distance < 0.70 && math.distance > 0.65) {
       pokemon.wrong = true;
-    } else if (match.distance < 0.80) {
+    } else if (match.distance < 0.60) {
     	pokemon.nonsense = true;
     } else { pokemon.raw = match.value; }
     return pokemon;
@@ -83,45 +90,3 @@ server.listen(port);
 server.post('/', connector.listen());
 
 console.log("Server running!");
-
-
-
-
-
-
-
-
-
-
-// const config = require('./config.js');
-// const restify = require('restify');
-// const builder = require('botbuilder');
-// const recast = require('recastai');
-// const recastClient = new recast.Client(config.recast);
-
-// // Connection to Microsoft Bot Framework
-// const connector = new builder.ChatConnector({
-//   appId: config.appId,
-//   appPassword: config.appPassword,
-// });
-
-// const bot = new builder.UniversalBot(connector);
-
-// // Event when Message received
-// bot.dialog('/', (session) => {
-// recastClient.textRequest(session.message.text)
-//  .then(res => {
-//    const intent = res.intent();
-//    const entity = res.get('pokemon');
-//    session.send(`Intent: ${intent.slug}`);
-//    session.send(`Entity: ${entity.name}`);
-//  })
-//  .catch(() => session.send('I need some sleep right now... Talk to me later!'));
-// });
-
-
-
-// // Server Init
-// const server = restify.createServer();
-// server.listen(8080);
-// server.post('/', connector.listen());

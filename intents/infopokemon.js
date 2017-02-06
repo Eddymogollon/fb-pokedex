@@ -1,4 +1,5 @@
 const request = require('superagent');
+const pokeData = require('./../lib/poke-data.js');
 
 const getInfoPokemon = (entity) => {
   if (!entity) { return Promise.reject([toText('Is that a pokemon?')]); }
@@ -35,6 +36,13 @@ const getInfoPokemon = (entity) => {
 			  	answer.push(toImage(json.sprites.front_default));
 			  }
 
+			  const prompt = [
+     			toButton('Info', `show me ${json.name}`),
+    		  toButton('Random pokemon', `show me ${getRandomPokemon()}`),
+   			];
+
+   			answer.push(toButtons(`See more about ${pokemonName}!`, prompt));
+
 			  resolve(answer);
     
 
@@ -45,25 +53,24 @@ const getInfoPokemon = (entity) => {
   });
 };
 
-
-//const infoPokemonLayout = (json) => {
-
-  // const answer = [toText(`:mag_right: Looking for ${json.name}`)];
-
-  // const types = json.types.map(elem => elem.type.name).join(' / ');
-  // answer.push(toText(`Type(s): ${types}`));
-  // if (json.sprites.front_default) {
-  // 	answer.push(toImage(json.sprites.front_default));
-  // }
-  // return answer;
-//};
-
 const toText = (message) => { 
 	return { type: 'text', content: message }; 
 };
 
 const toImage = (image) => { 
 	return { type: 'image', content: image };
+};
+
+// Buttons
+const toButtons = (title, buttons) => {
+  return { type: 'buttons', content: buttons, title };
+};
+// Button
+const toButton = (title, value) => { return { title, value }; };
+
+const getRandomPokemon = () => {
+  const randomPokemon = Math.floor(Math.random() * (pokeData.pokemons.length - 1));
+  return pokeData.pokemons[randomPokemon];
 };
 
 module.exports = getInfoPokemon;
