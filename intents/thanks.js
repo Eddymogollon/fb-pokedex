@@ -1,12 +1,12 @@
 const random = array => { return array[Math.floor(Math.random() * array.length)]; };
-const getFeelings = (entity) => {
+const getThanks = (entity) => {
   const answers = [
-    `Better than ever!`,
-    `For being a bot, pretty well, ya know!`,
-    `I feel LEGEND-wait-for-it-DARY!`,
-    `Great!!`,
-    `Awesome!`,
-    `Not bad!`,
+    `You're welcome!`,
+    `No problem! ;)`,
+    `No problemo.`,
+    `Don't mention it!`,
+    `No sweat`,
+    `It's all gravy`,
   ];
   
   return Promise.resolve([toText(random(answers))]);
@@ -17,6 +17,6 @@ const toText = (message) => {
 	return { type: 'text', content: message }; 
 };
 
-module.exports = getFeelings;
+module.exports = getThanks;
 
 	

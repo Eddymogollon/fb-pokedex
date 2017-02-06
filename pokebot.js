@@ -2,9 +2,12 @@ const getInfoPokemon = require('./intents/infopokemon.js');
 const getGreetings = require('./intents/greetings.js');
 const getGoodbyes = require('./intents/goodbyes.js');
 const getFeelings = require('./intents/feelings.js');
+const getThanks = require('./intents/thanks.js');
+const getHelp = require('./intents/help.js');
+
 
 const pokeData = require('./lib/poke-data.js');
-const Fuzzy = require('fuzzy-matching')
+const Fuzzy = require('fuzzy-matching');
 const fmpokemons = new Fuzzy(pokeData.pokemons);
 
 const config = require('./config.js');
@@ -26,7 +29,8 @@ const INTENTS = {
   greetings: getGreetings,
   goodbyes: getGoodbyes,
   feelings: getFeelings,
-  // help: getHelp,
+  thanks: getThanks,
+  help: getHelp,
 };
 
 const sendMessageByType = {
@@ -41,8 +45,10 @@ const checkEntity = (res) => {
   const pokemon = res.get('pokemon');
   if (pokemon) {
     const match = fmpokemons.get(pokemon.raw);
-    if (match.distance < 0.7) {
+    if (match.distance < 0.85 && math.distance > 0.80) {
       pokemon.wrong = true;
+    } else if (match.distance < 0.80) {
+    	pokemon.nonsense = true;
     } else { pokemon.raw = match.value; }
     return pokemon;
   }
@@ -53,13 +59,15 @@ bot.dialog('/', (session) => {
   recastClient.textRequest(session.message.text)
   .then(res => {
     const intent = res.intent();
-    //const entity = res.get('pokemon');
     const entity = checkEntity(res);
 
     //Check words is not necessary
 
     console.log(intent);
     console.log(entity); //console.log(res.get('pokemon'));
+    if (!intent || !entity) {
+    	reject(session.send("Sorry, didn't get that. Ask for help if you're confused!"));
+    }
 
     if (intent) {
 
@@ -70,7 +78,7 @@ bot.dialog('/', (session) => {
 		}
 
   })
-  .catch(() => session.send('I need some sleep right now... Talk to me later!'));
+  .catch(() => session.send("Sorry, didn't get that. Ask for help if you're confused!"));
 });
 // Server Init
 const server = restify.createServer();

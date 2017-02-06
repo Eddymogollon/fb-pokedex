@@ -1,7 +1,8 @@
 const request = require('superagent');
 
 const getInfoPokemon = (entity) => {
-  if (!entity) { return Promise.reject([toText('Which pokemon?')]); }
+  if (!entity) { return Promise.reject([toText('Is that a pokemon?')]); }
+  if (entity.nonsense) { return Promise.reject([toText(`Sorry, didn't get that. Ask for help if you're confused!`)]); }
   if (entity.wrong) { return Promise.reject([toText(`The pokemon ${entity.raw} does not exist... You might have mispelled it.`)]); }
 
   return new Promise((resolve, reject) => {
@@ -15,17 +16,19 @@ const getInfoPokemon = (entity) => {
 
       request.get(json.species.url).end((err, response) => {
       	if (err) {
-	     		console.error(err);
+	     		return reject(err);
 	    	}
 
-	    	const answer = [toText(`:mag_right: Looking for ${json.name}`)];
+	    	pokemonName = toCapitalize(json.name);
+
+	    	const answer = [toText(`:mag_right: Looking for ${pokemonName}`)];
 
 				function toCapitalize(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
 
   			const types = json.types.map(elem => toCapitalize(elem.type.name)).join(' / ');
 
   			const description = response.body.flavor_text_entries[1].flavor_text;
-	    	answer.push(toText(description));
+	    	answer.push(toText(`${pokemonName}: ${description}`));
 
   			answer.push(toText(`Type(s): ${types}`));
 			  if (json.sprites.front_default) {
