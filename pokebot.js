@@ -15,7 +15,7 @@ const restify = require('restify');
 const builder = require('botbuilder');
 const recast = require('recastai');
 const recastClient = new recast.Client(config.recast);
-
+const port = (process.env.PORT || 5678);
 
 // Connection to Microsoft Bot Framework
 const connector = new builder.ChatConnector({
@@ -82,7 +82,7 @@ bot.dialog('/', (session) => {
 });
 // Server Init
 const server = restify.createServer();
-server.listen(8080);
+server.listen(port);
 server.post('/', connector.listen());
 
 console.log("Server running!");
