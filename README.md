@@ -1,4 +1,4 @@
-##Pokemon Pokedexasdasd
+##Pokemon Pokedex
 
 A Messenger bot that analyzes user input and answers in natural language, and retrieves information about Pokémons using AI.
 
@@ -13,13 +13,10 @@ Node.js, Messenger Bot API, Recast.AI API, Microsoft Bot Framework and Heroku fo
 
 Unfortunately, I can't show you the real application because I recently did it, I need to add a few things and Facebook will need some time to review it. However, I will post some pictures below so you can see how the app works.
 
-Photo
 ![alt text](https://image.ibb.co/mCOfva/Selection_007.png "Pokebot1")
 
 
-Photo
 ![alt text](https://image.ibb.co/j2zaTv/Selection_005.png "Pokebot2")
 
 
-Photo
 ![alt text](https://image.ibb.co/eFwN8v/Selection_006.png "Pokebot3")
