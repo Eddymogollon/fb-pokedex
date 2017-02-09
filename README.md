@@ -13,14 +13,14 @@ Node.js, Messenger Bot API, Recast.AI API, Microsoft Bot Framework and Heroku fo
 
 Unfortunately, I can't show you the real application because I recently did it, I need to add a few things and Facebook will need some time to review it. However, I will post some pictures below so you can see how the app works.
 
-![alt text][logo]
+![alt text]
 
 [logo]: https://preview.ibb.co/fYsJgF/Selection_007.png "Pokebot1"
 
-![alt text][logo]
+![alt text]
 
-[logo]: https://ibb.co/bwsvTv "Pokebot2"
+[logo]: https://image.ibb.co/j2zaTv/Selection_005.png "Pokebot2"
 
-![alt text][logo]
+![alt text]
 
-[logo]: https://ibb.co/dDDfva "Pokebot3"
+[logo]: https://image.ibb.co/eFwN8v/Selection_006.png "Pokebot3"
