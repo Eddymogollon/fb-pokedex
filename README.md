@@ -1,4 +1,4 @@
-##Pokemon Pokedex
+##Pokemon Pokedexasdasd
 
 A Messenger bot that analyzes user input and answers in natural language, and retrieves information about Pokémons using AI.
 
@@ -15,7 +15,7 @@ Unfortunately, I can't show you the real application because I recently did it, 
 
 ![alt text][logo]
 
-[logo]: https://ibb.co/hq2vTv "Pokebot1"
+[logo]: https://preview.ibb.co/fYsJgF/Selection_007.png "Pokebot1"
 
 ![alt text][logo]
 
